@@ -22,8 +22,8 @@ export default function AppFunctional(props) {
     const [steps, setSteps] = useState(0);
     const [x,y] = getCoordinates(grid);
     const [grid, setGrid] = useState([0,0,0,  0,"B",0,  0,0,0]);
-    const [message, setMessage] = useState('');
-    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState("");
+    const [email, setEmail] = useState("");
     
     function handleSubmit(e) {
       e.preventDefault();
@@ -38,7 +38,7 @@ export default function AppFunctional(props) {
           return setMessage("foo@bar.baz failure #71");
         }
         
-        Axios.post(url, { email, x, y, steps })
+        Axios.post(url, { email, steps, x, y })
           .then((res) => {
             setMessage(res.data.message);
             setEmail("");
@@ -50,7 +50,7 @@ export default function AppFunctional(props) {
             setSteps(0);
           });
       }
-    }
+    
 
   function getPosition(){
     let position = 0;
@@ -58,13 +58,13 @@ export default function AppFunctional(props) {
     if(grid[i] === "B") position = i;
     }
     setSteps(steps+1);
-    setMessage('');
+    setMessage("");
     return position; 
   }
   
-  function leftButton() {
+  function leftButton(){
     if (x === 1) {
-      setMessage("You can't go left.");
+      setMessage("You can't go left");
     } else {
       let newGrid = [...grid];
       let position = getPosition();
@@ -73,7 +73,49 @@ export default function AppFunctional(props) {
       setGrid(newGrid);
     }
   }
+  function upButton(){
+    if (y === 1) {
+      setMessage("You can't go up");
+    } else {
+      let position = getPosition();
+      let newGrid = [...grid];
+      newGrid[position] = grid[position - 3];
+      newGrid[position - 3] = "B";
+      setGrid(newGrid);
+    }
+  }
 
+  function rightButton(){
+    if (x === 3) {
+      setMessage("You can't go right");
+    } else {
+      let newGrid = [...grid];
+      let position = getPosition();
+      newGrid[position] = grid[position + 1];
+      newGrid[position + 1] = "B";
+      setGrid(newGrid);
+    }
+  }
+
+  function downButton(){
+    if (y === 3) {
+      setMessage("You can't go down");
+    } else {
+      let position = getPosition();
+      let newGrid = [...grid];
+      newGrid[position] = grid[position + 3];
+      newGrid[position + 3] = "B";
+      setGrid(newGrid);
+    }
+  }
+
+  function reset(){
+    setGrid([0, 0, 0, 0, "B", 0, 0, 0, 0]);
+    setSteps(0);
+    setMessage('');
+    setEmail('');
+  }
+  
 
 
 
@@ -100,16 +142,16 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={()=>{leftButton()}}>LEFT</button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
-        <button id="reset">reset</button>
+        <button id="left" onClick={()=>leftButton()}>LEFT</button>
+        <button id="up" onClick={()=>upButton()}>UP</button>
+        <button id="right" onClick={()=>rightButton()}>RIGHT</button>
+        <button id="down" onClick={()=>downButton()}>DOWN</button>
+        <button id="reset" onClick={()=>reset()}>reset</button>
       </div>
       <form onSubmit={handleSubmit}>
         <input id="email" type="email" placeholder="type email"></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
-  )
+  );
 }
