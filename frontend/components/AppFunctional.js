@@ -1,6 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
+
+export function getCoordinates(grid) {
+  let position = 0;
+  for(let i=0; i< grid.length; i++) {
+    if (grid[i] === "B") position = i;
+  }
+  if (position === 0) return [1,1];
+  else if (position === 1) return [2,1];
+  else if (position === 2) return [3,1];
+  else if (position === 3) return [1,2];
+  else if (position === 4) return [2,2];
+  else if (position === 5) return [3,2];
+  else if (position === 6) return [1,3];
+  else if (position === 7) return [2,3];
+  return [3,3];
+}
 
 export default function AppFunctional(props) {
+
+  const initialGrid = 
+    [0,0,0,  0,"B",0,  0,0,0]
+
+    const [steps, setSteps] = useState(0);
+    const [x,y] = getCoordinates(grid);
+    const [grid, setGrid] = useState(initialGrid);
+    const [message, setMessage] = useState('');
+    const [email, setEmail] = useState('');
+    
+  
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
