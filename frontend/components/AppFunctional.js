@@ -29,13 +29,13 @@ export default function AppFunctional(props) {
       e.preventDefault();
         
         if (!email.length) {
-          return setMessage("email is required");
+          return setMessage("Ouch: email is required");
         }
         if (email === "foo@bar.baz") {
           return setMessage("foo@bar.baz failure #71");
         }
         if (email.split(".").length !== 2) {
-          return setMessage("email must be a valid email");
+          return setMessage("Ouch: email must be a valid email");
         }
         const url = "http://localhost:9000/api/result";
         
