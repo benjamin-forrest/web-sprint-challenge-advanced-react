@@ -29,13 +29,13 @@ export default function AppFunctional(props) {
       e.preventDefault();
         
         if (!email.length) {
-          return setMessage("email required");
-        }
-        if (email.split(".").length !== 2) {
-          return setMessage("email must be a valid email");
+          return setMessage("email is required");
         }
         if (email === "foo@bar.baz") {
           return setMessage("foo@bar.baz failure #71");
+        }
+        if (email.split(".").length !== 2) {
+          return setMessage("email must be a valid email");
         }
         const url = "http://localhost:9000/api/result";
         
@@ -124,7 +124,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">Coordinates ({x}, {y})</h3>
-        <h3 id="steps">You moved {steps} times</h3>
+        <h3 id="steps">You moved {steps} time{`${steps === 1 ? "" : "s"}`}</h3>
       </div>
       <div id="grid">
         {grid.map((square, i) =>(
