@@ -28,6 +28,15 @@ export default function AppFunctional(props) {
     const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
     
+  function getPosition(){
+    let position = 0;
+    for (let i = 0; i < grid.length; i++){
+    if(grid[i] === "B") position = i;
+    }
+    setSteps(steps+1);
+    setMessage('');
+    return position; 
+  }
   
   return (
     <div id="wrapper" className={props.className}>
