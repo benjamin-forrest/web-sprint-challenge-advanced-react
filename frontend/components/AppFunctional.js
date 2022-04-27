@@ -69,8 +69,8 @@ export default function AppFunctional(props) {
     } else {
       let position = getPosition();
       let newGrid = [...grid];
-      newGrid[position] = grid[position - 3];
-      newGrid[position - 3] = "B";
+      newGrid[position] = grid[position - 1];
+      newGrid[position - 1] = "B";
       setGrid(newGrid);
     }
   }
