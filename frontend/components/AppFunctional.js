@@ -20,14 +20,14 @@ export function getCoordinates(grid) {
 export default function AppFunctional(props) {
 
     const [steps, setSteps] = useState(0);
-    const [x,y] = getCoordinates(grid);
-    const [grid, setGrid] = useState([0,0,0,  0,"B",0,  0,0,0]);
     const [message, setMessage] = useState("");
+    const [grid, setGrid] = useState([0,0,0,0,"B",0,0,0,0]);
+    const [x,y] = getCoordinates(grid);
     const [email, setEmail] = useState("");
     
     function handleSubmit(e) {
       e.preventDefault();
-        const url = "http://localhost:9000/api/result";
+        
         if (!email.length) {
           return setMessage("email required");
         }
@@ -37,8 +37,9 @@ export default function AppFunctional(props) {
         if (email === "foo@bar.baz") {
           return setMessage("foo@bar.baz failure #71");
         }
+        const url = "http://localhost:9000/api/result";
         
-        Axios.post(url, { email, steps, x, y })
+        Axios.post(url, { email, x, y, steps })
           .then((res) => {
             setMessage(res.data.message);
             setEmail("");
@@ -66,8 +67,8 @@ export default function AppFunctional(props) {
     if (x === 1) {
       setMessage("You can't go left");
     } else {
-      let newGrid = [...grid];
       let position = getPosition();
+      let newGrid = [...grid];
       newGrid[position] = grid[position - 3];
       newGrid[position - 3] = "B";
       setGrid(newGrid);
@@ -89,8 +90,8 @@ export default function AppFunctional(props) {
     if (x === 3) {
       setMessage("You can't go right");
     } else {
-      let newGrid = [...grid];
       let position = getPosition();
+      let newGrid = [...grid];
       newGrid[position] = grid[position + 1];
       newGrid[position + 1] = "B";
       setGrid(newGrid);
@@ -112,8 +113,8 @@ export default function AppFunctional(props) {
   function reset(){
     setGrid([0, 0, 0, 0, "B", 0, 0, 0, 0]);
     setSteps(0);
-    setMessage('');
-    setEmail('');
+    setMessage("");
+    setEmail("");
   }
   
 
@@ -122,24 +123,17 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
-        <h3 id="steps">You moved 0 times</h3>
-        <h3 id="message">{message}</h3>
+        <h3 id="coordinates">Coordinates ({x}, {y})</h3>
+        <h3 id="steps">You moved {steps} times</h3>
       </div>
-      
       <div id="grid">
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square active">B</div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
+        {grid.map((square, i) =>(
+        <div key={i} className={`square ${square === "B" ? "active" : ""}`}>
+          {`${square === "B" ? "B" : ""}`} 
+        </div>))}
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
         <button id="left" onClick={()=>leftButton()}>LEFT</button>
@@ -149,7 +143,10 @@ export default function AppFunctional(props) {
         <button id="reset" onClick={()=>reset()}>reset</button>
       </div>
       <form onSubmit={handleSubmit}>
-        <input id="email" type="email" placeholder="type email"></input>
+        <input id="email" type="email" placeholder="type email"
+        onChange={(e)=> setEmail(e.target.value)}
+        value={email}>
+        </input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
