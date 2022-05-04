@@ -88,7 +88,7 @@ getPosition = () => {
             Coordinates ({this.state.x},{this.state.y})</h3>
           <h3 id="steps">
             You moved {this.state.steps} 
-            time{`${this.state.steps === 1 ? "" : "s"}`} </h3>
+             time{`${this.state.steps === 1 ? "" : "s"}`} </h3>
         </div>
         <div id="grid">
         {this.state.grid.map((square, i) => (
