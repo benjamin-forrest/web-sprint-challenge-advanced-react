@@ -59,7 +59,7 @@ getCoordinates = () => {
   let grid = this.state.grid;
   let position = 0;
   for (let i = 0; i < grid.length; i++) {
-    if (grid[i] === "B") pos = i;
+    if (grid[i] === "B") position = i;
   }
   if (position === 0) return [1, 1];
   else if (position === 1) return [1, 2];
