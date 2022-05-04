@@ -84,8 +84,11 @@ getPosition = () => {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates ({this.state.x},{this.state.y})</h3>
-          <h3 id="steps">You moved {this.state.steps} time{`${this.state.steps === 1 ? "" : "s"}`} </h3>
+          <h3 id="coordinates">
+            Coordinates ({this.state.x},{this.state.y})</h3>
+          <h3 id="steps">
+            You moved {this.state.steps} 
+            time{`${this.state.steps === 1 ? "" : "s"}`} </h3>
         </div>
         <div id="grid">
         {this.state.grid.map((square, i) => (
@@ -111,7 +114,19 @@ getPosition = () => {
             }
           }}
           >LEFT</button>
-          <button id="up">UP</button>
+          <button id="up"
+          onClick={() => {
+            if (this.state.y === 1) {
+              this.setState({ message: "You can't go up" });
+            } else {
+              let position = this.getPosition();
+              let newGrid = [...this.state.grid];
+              newGrid[position] = this.state.grid[position - 3];
+              newGrid[position - 3] = "B";
+              this.setState({ grid: newGrid, y: this.state.y - 1 });
+            }
+          }}
+          >UP</button>
           <button id="right">RIGHT</button>
           <button id="down">DOWN</button>
           <button id="reset">reset</button>
