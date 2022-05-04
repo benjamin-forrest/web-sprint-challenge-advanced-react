@@ -8,7 +8,7 @@ const upButton = () => screen.getByText('UP')
 const rightButton = () => screen.getByText('RIGHT')
 const downButton = () => screen.getByText('DOWN')
 const resetButton = () => screen.getByText('reset')
-const emailField = () => screen.getByText('type email')
+const emailField = () => screen.getByPlaceholderText('type email')
 beforeEach(() =>{
   render(<App/>)
 })
