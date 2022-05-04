@@ -141,9 +141,30 @@ getPosition = () => {
           }}
           >RIGHT</button>
           <button id="down"
-          
+          onClick={() => {
+            if (this.state.y === 3) {
+              this.setState({ message: "You can't go down" });
+            } else {
+              let position = this.getPosition();
+              let newGrid = [...this.state.grid];
+              newGrid[position] = this.state.grid[position + 3];
+              newGrid[position + 3] = "B";
+              this.setState({ grid: newGrid, y: this.state.y + 1 });
+            }
+          }}
           >DOWN</button>
-          <button id="reset">reset</button>
+          <button id="reset"
+          onClick={() => {
+            this.setState({
+              grid: [0, 0, 0, 0, "B", 0, 0, 0, 0],
+              steps: 0,
+              message: "",
+              x: 2,
+              y: 2,
+              email: ""
+            });
+          }}
+          >reset</button>
         </div>
         <form onSubmit={this.handleSubmit}>
           <input id="email" type="email" placeholder="type email" value={this.state.email}
