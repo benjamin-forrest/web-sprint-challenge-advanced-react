@@ -17,9 +17,11 @@ export default class AppClass extends React.Component {
     evt.preventDefault();
     if (!this.state.email.length) {
       return this.setState({ message: "Ouch: email is required" });
-    } else if (this.state.email.split('.').length !== 2) {
+    } 
+    else if (this.state.email.split('.').length !== 2) {
       return this.setState({ message: "Ouch: email must be a valid email" });
-    } else if (this.state.email === "foo@bar.baz") {
+    } 
+    else if (this.state.email === "foo@bar.baz") {
       return this.setState({
         message: "foo@bar.baz failure #71",
         grid: [0, 0, 0, 0, "B", 0, 0, 0, 0],
@@ -30,15 +32,11 @@ export default class AppClass extends React.Component {
       });
   } else {
     const url = "http://localhost:9000/api/result";
-    Axios.post(url, {
-      x: this.state.x,
-      y: this.state.y,
-      steps: this.state.steps,
-      email: this.state.email,
-    })
+    Axios.post(url, { x: this.state.x, y: this.state.y, steps: this.state.steps, email: this.state.email })
       .then((res) => {
         this.setState({
           message: res.data.message,
+          email: res.data.email
         });
         document.getElementById("email").value = "";
       })
