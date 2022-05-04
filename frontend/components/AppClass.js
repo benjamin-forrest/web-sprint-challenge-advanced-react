@@ -71,6 +71,14 @@ getCoordinates = () => {
   else if (position === 7) return [3, 2];
   return [3, 3];
 };
+getPosition = () => {
+  let position = 0;
+  for (let i = 0; i < this.state.grid.length; i++) {
+    if (this.state.grid[i] === "B") position = i;
+  }
+  this.setState({ message: "", steps: this.state.steps + 1 });
+  return position;
+};
   render() {
     const { className } = this.props
     return (
