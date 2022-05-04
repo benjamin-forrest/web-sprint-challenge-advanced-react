@@ -1,6 +1,17 @@
 import React from 'react'
 
 export default class AppClass extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      steps: 0,
+      grid: [0, 0, 0, 0, "B", 0, 0, 0, 0],
+      message: "",
+      x: 2,
+      y: 2,
+      email: "",
+    };
+  }
   render() {
     const { className } = this.props
     return (
@@ -30,8 +41,9 @@ export default class AppClass extends React.Component {
           <button id="down">DOWN</button>
           <button id="reset">reset</button>
         </div>
-        <form>
-          <input id="email" type="email" placeholder="type email"></input>
+        <form onSubmit={this.handleSubmit}>
+          <input id="email" type="email" placeholder="type email" value={this.state.email}
+            onChange={(evt) => this.setState({ email: evt.target.value })}></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
