@@ -84,25 +84,33 @@ getPosition = () => {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates (2, 2)</h3>
-          <h3 id="steps">You moved 0 times</h3>
+          <h3 id="coordinates">Coordinates ({this.state.x},{this.state.y})</h3>
+          <h3 id="steps">You moved {this.state.steps} time{`${this.state.steps === 1 ? "" : "s"}`} </h3>
         </div>
         <div id="grid">
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square active">B</div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
+        {this.state.grid.map((square, i) => (
+          <div key={i} className={`square ${square === "B" ? "active" : ""}`}>
+          {`${square === "B" ? "B" : ""}`}
+          </div>
+        ))}
         </div>
         <div className="info">
-          <h3 id="message"></h3>
+          <h3 id="message">{this.state.message}</h3>
         </div>
         <div id="keypad">
-          <button id="left">LEFT</button>
+          <button id="left"
+          onClick={() => {
+            if (this.state.x === 1) {
+              this.setState({ message: "You can't go left" });
+            } else {
+              let position = this.getPosition();
+              let newGrid = [...this.state.grid];
+              newGrid[position] = this.state.grid[position - 1];
+              newGrid[position - 1] = "B";
+              this.setState({ grid: newGrid, x: this.state.x - 1 });
+            }
+          }}
+          >LEFT</button>
           <button id="up">UP</button>
           <button id="right">RIGHT</button>
           <button id="down">DOWN</button>
