@@ -55,6 +55,22 @@ export default class AppClass extends React.Component {
       });
   }
 };
+getCoordinates = () => {
+  let grid = this.state.grid;
+  let position = 0;
+  for (let i = 0; i < grid.length; i++) {
+    if (grid[i] === "B") pos = i;
+  }
+  if (position === 0) return [1, 1];
+  else if (position === 1) return [1, 2];
+  else if (position === 2) return [1, 3];
+  else if (position === 3) return [2, 1];
+  else if (position === 4) return [2, 2];
+  else if (position === 5) return [2, 3];
+  else if (position === 6) return [3, 1];
+  else if (position === 7) return [3, 2];
+  return [3, 3];
+};
   render() {
     const { className } = this.props
     return (
